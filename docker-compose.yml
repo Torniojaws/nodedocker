@@ -1,0 +1,41 @@
+version: '3.7'
+services:
+
+  unittest-database:
+    image: mysql:8.0.17
+    environment: 
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+    volumes:
+      - ./sql/origo.sql:/docker-entrypoint-initdb.d/dump.sql
+    ports:
+      - '${DB_EXT_PORT}:3306'
+    expose:
+      - '${DB_EXT_PORT}'
+
+  unittests:
+    image: my/nodetests:${TAG}
+    build:
+      context: .
+      dockerfile: Dockerfile.tests
+    environment:
+      DBCONNLIMIT: ${DB_CONNLIMIT}
+      DBHOST: ${DB_HOST}
+      DBUSER: ${DB_USER}
+      DBPASSWORD: ${DB_PASSWORD}
+      DBNAME: ${DB_NAME}
+    depends_on:
+      - unittest-database
+
+  server:
+    image: my/nodedocker:${TAG}  # TAG added to ENV in makefile
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '${SERVER_EXT_PORT}:3000'
+    expose:
+      - '${SERVER_EXT_PORT}'

@@ -1,6 +1,9 @@
 const app = require('express')();
 const bodyParser = require('body-parser');
+const dotenv = require('dotenv');
+dotenv.config();
 const routes = require('./routes');
+
 const port = 3000;
 
 app.use(bodyParser.json());

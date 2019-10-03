@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node index",
-    "test": "eslint . && mocha test/* --exit"
+    "test": "eslint . && mocha --recursive test/ --exit"
   },
   "keywords": [
     "node",
@@ -16,6 +16,7 @@
   "license": "MIT",
   "devDependencies": {
     "chai": "^4.2.0",
+    "chai-exclude": "^2.0.2",
     "chai-http": "^4.3.0",
     "eslint": "^6.4.0",
     "eslint-config-standard": "^14.1.0",
@@ -23,9 +24,11 @@
     "eslint-plugin-node": "^10.0.0",
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
-    "mocha": "^6.2.0"
+    "mocha": "^6.2.0",
+    "mysql": "^2.17.1"
   },
   "dependencies": {
+    "dotenv": "^8.1.0",
     "express": "^4.17.1"
   }
 }

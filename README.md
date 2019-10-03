@@ -4,16 +4,16 @@ A barebones dockerized Node+Express REST API.
 
 ## Install
 
-`docker build -t my/nodedocker:v1 .`
+`make build`
 
 ## Run (after install)
 
-1. `docker run my/nodedocker -p 3000:3000 -d`
+1. `make run`
 1. `curl localhost:3000`
 
 ## Tests
 
-`npm test`
+`make test`
 
 ## Endpoints
 
