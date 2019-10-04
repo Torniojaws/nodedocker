@@ -14,6 +14,7 @@ const pool = mysql.createPool(dbConfig);
  * @param params is the array of values to pass to the statement, eg. [1]
  */
 const query = async ({ sql, values }) => {
+  if (!connectionOk()) console.error('Database unavailable!');
   return new Promise((resolve, reject) => {
     pool.query(sql, values, (err, rows) => {
       if (err) reject(new Error(err));
@@ -25,6 +26,8 @@ const query = async ({ sql, values }) => {
     });
   });
 };
+
+const connectionOk = () => pool.getConnection((err) => !err);
 
 module.exports = {
   query

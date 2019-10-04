@@ -22,19 +22,27 @@ services:
       context: .
       dockerfile: Dockerfile.tests
     environment:
-      DBCONNLIMIT: ${DB_CONNLIMIT}
-      DBHOST: ${DB_HOST}
-      DBUSER: ${DB_USER}
-      DBPASSWORD: ${DB_PASSWORD}
-      DBNAME: ${DB_NAME}
+      DB_CONNLIMIT: ${DB_CONNLIMIT}
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_EXT_PORT: ${DB_EXT_PORT}
     depends_on:
       - unittest-database
 
   server:
-    image: my/nodedocker:${TAG}  # TAG added to ENV in makefile
+    image: my/nodedocker:${TAG}
     build:
       context: .
       dockerfile: Dockerfile
+    environment:
+      DB_CONNLIMIT: ${DB_CONNLIMIT}
+      DB_HOST: unittest-database
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+      DB_EXT_PORT: ${DB_EXT_PORT}
     ports:
       - '${SERVER_EXT_PORT}:3000'
     expose:

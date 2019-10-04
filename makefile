@@ -8,7 +8,7 @@ build:
 
 .PHONY: run
 run:
-	export TAG=$$(git rev-parse HEAD) && docker-compose up -d
+	export TAG=$$(git rev-parse HEAD) && docker-compose up -d server
 	
 .PHONY: test
 test:
